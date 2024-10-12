@@ -13,6 +13,7 @@ let mockData = [
     "content": "Team meeting at 4 PM today 🙂",
     "priority": "high",
     "timestamp": "2024-10-02T16:00:00Z",
+    "category": "Meetings",
     "read": false
   }
 ];
@@ -28,9 +29,10 @@ app.post('/api/messages', (req, res) => {
   }
   
   const newMessage = {
-    id: `msg${mockData.length + 1}`,
+    id: `msg${new Date().getTime()}`,
     content: req.body.content,
     priority: req.body.priority,
+    category: req.body.category || "",
     timestamp: new Date().toISOString(),
     read: false
   };

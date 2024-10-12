@@ -26,6 +26,7 @@ Messages follow this JSON structure:
       "id": "msg123",
       "content": "Team meeting at 3 PM today 🙂",
       "priority": "high",
+      "category": "Meetings",
       "timestamp": "2024-09-30T15:00:00Z",
       "read": false
     }
@@ -53,7 +54,7 @@ Messages follow this JSON structure:
 
 The server will start running on `http://localhost:3000`.
 
-## Adding Messages Manually
+## Adding Messages via POST
 
 To add a new message manually:
 
@@ -63,6 +64,7 @@ To add a new message manually:
    {
      "content": "New project kickoff meeting",
      "priority": "high", // any other value than "high" will be a normal priority
+     "category": "Meetings" // any category name you want, or empty
    }
    ```
 
@@ -70,7 +72,7 @@ To add a new message manually:
 
 2. The server will automatically assign an ID, timestamp and set `read` to `false`.
 
-## Modifying the Mock Data
+## Modifying the initial Mock Data
 
 To change the initial set of messages or modify how the mock API behaves:
 
