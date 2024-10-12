@@ -4,42 +4,39 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
+// app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+let mockData = [
+  {
+    "id": "msg1",
+    "content": "Team meeting at 4 PM today 🙂",
+    "priority": "high",
+    "timestamp": "2024-10-02T16:00:00Z",
+    "read": false
+  }
+];
 
 app.get('/api/messages', (req, res) => {
-  const mockData = {
-    "messages": [
-      {
-        "id": "msg121",
-        "content": "Team meeting at 12 PM today 🙂",
-        "priority": "low",
-        "timestamp": "2024-10-10T12:00:00Z",
-        "read": false
-      },
-      {
-        "id": "msg12",
-        "content": "Team meeting at 2 PM today 🙂",
-        "priority": "low",
-        "timestamp": "2024-10-11T14:00:00Z",
-        "read": false
-      },
-      {
-        "id": "msg123",
-        "content": "Team meeting at 6 PM today 🙂",
-        "priority": "high",
-        "timestamp": "2024-10-02T18:00:00Z",
-        "read": false
-      },
-      {
-        "id": "msg1234",
-        "content": "Team meeting at 4 PM today 🙂",
-        "priority": "high",
-        "timestamp": "2024-10-02T16:00:00Z",
-        "read": false
-      }
-    ]
+  const data = { "messages": mockData };
+  res.json(data);
+});
+
+app.post('/api/messages', (req, res) => {
+  if (!req || !req.body) {
+    throw new Error("Invalid request body", req);
+  }
+  
+  const newMessage = {
+    id: `msg${mockData.length + 1}`,
+    content: req.body.content,
+    priority: req.body.priority,
+    timestamp: new Date().toISOString(),
+    read: false
   };
 
-  res.json(mockData);
+  mockData.push(newMessage);
+  res.status(201).json(newMessage);
 });
 
 app.listen(port, () => {
